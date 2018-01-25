@@ -7,18 +7,16 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-card *ngIf="user$ | async; let user; else login" >
-        <ion-card-content>
-            <!--<img src="{{user.photoUrl}}"/>-->
-            <ion-card-title>
-                {{user.displayName}}
-            </ion-card-title>
-            {{user.email}}
-        </ion-card-content>
-        <button ion-button outline (click)="authModule.signOut()">logout</button>
-    </ion-card>
+    <div *ngIf="user$ | async; let user; then home else login"></div>
 
-    {{ threads | async | json }}
+    <ng-template #home>
+        <ion-list>
+            <button ion-item *ngFor="let thread of threads$ | async" (click)="threadSelected(thread)">
+                {{ thread.data().name }}
+            </button>
+        </ion-list>
+    </ng-template>
+
 
     <ng-template #login>
         <ion-card style="height:100%">

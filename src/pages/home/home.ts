@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../../models/user';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 
 @Component({
@@ -10,8 +11,10 @@ import { User } from '../../models/user';
     templateUrl: 'home.html'
 })
 export class HomePage {
+    private threads_col: any;
+
     public user$: Observable<User>;
-    public threads$: Observable<Thread>;
+    public threads$: Observable<any>;
 
     constructor(
         public navCtrl: NavController,
@@ -19,7 +22,16 @@ export class HomePage {
         public authModule: AuthServiceProvider,
     ) {
         this.user$ = this.authModule.authUser
-        this.afs.collection('threads').valueChanges()
+        this.threads_col = this.afs.collection('threads')
+        this.threads$ = this.threads_col
+            .snapshotChanges()
+            .map(threads_snap => threads_snap.map(t => t.payload.doc))
+            //.subscribe(')
+        //this.threads$.subscribe(a => console.log(a))
+    }
+
+    threadSelected(thread) {
+        console.log(thread)
     }
 
     ionViewCanEnter() {
