@@ -13,11 +13,13 @@ import { GooglePlus } from '@ionic-native/google-plus';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { RoomPage } from '../pages/room/room';
 
 @NgModule({
     declarations: [
         MyApp,
-        HomePage
+        HomePage,
+        RoomPage
     ],
     imports: [
         BrowserModule,
@@ -29,7 +31,8 @@ import { HomePage } from '../pages/home/home';
     bootstrap: [IonicApp],
     entryComponents: [
         MyApp,
-        HomePage
+        HomePage,
+        RoomPage
     ],
     providers: [
         StatusBar,
