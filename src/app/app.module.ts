@@ -13,13 +13,13 @@ import { GooglePlus } from '@ionic-native/google-plus';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { RoomPage } from '../pages/room/room';
+import { ThreadPage } from '../pages/thread/thread'
 
 @NgModule({
     declarations: [
         MyApp,
         HomePage,
-        RoomPage
+        ThreadPage,
     ],
     imports: [
         BrowserModule,
@@ -32,7 +32,7 @@ import { RoomPage } from '../pages/room/room';
     entryComponents: [
         MyApp,
         HomePage,
-        RoomPage
+        ThreadPage,
     ],
     providers: [
         StatusBar,

@@ -5,6 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { User } from '../../models/user';
 import { AngularFirestore } from 'angularfire2/firestore';
 
+import { ThreadPage } from '../thread/thread'
+
 
 @Component({
     selector: 'page-home',
@@ -12,6 +14,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 })
 export class HomePage {
     private threads_col: any;
+    public threadPage: ThreadPage
 
     public user$: Observable<User>;
     public threads$: Observable<any>;
@@ -31,7 +34,9 @@ export class HomePage {
     }
 
     threadSelected(thread) {
-        console.log(thread)
+        this.navCtrl.push(ThreadPage, {
+            'thread': thread
+        })
     }
 
     ionViewCanEnter() {
