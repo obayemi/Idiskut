@@ -11,13 +11,15 @@ import { User } from '../../models/user';
 })
 export class HomePage {
     public user$: Observable<User>;
+    public threads$: Observable<Thread>;
 
     constructor(
         public navCtrl: NavController,
-        //private afs: AngularFirestore,
+        private afs: AngularFirestore,
         public authModule: AuthServiceProvider,
     ) {
         this.user$ = this.authModule.authUser
+        this.afs.collection('threads').valueChanges()
     }
 
     ionViewCanEnter() {

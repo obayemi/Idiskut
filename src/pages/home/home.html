@@ -18,6 +18,8 @@
         <button ion-button outline (click)="authModule.signOut()">logout</button>
     </ion-card>
 
+    {{ threads | async | json }}
+
     <ng-template #login>
         <ion-card style="height:100%">
             <ion-card-content>
