@@ -17,6 +17,7 @@ export class HomePage {
     public threadPage: ThreadPage
 
     public user$: Observable<User>;
+    public user: User;
     public threads$: Observable<any>;
 
     constructor(
@@ -25,17 +26,26 @@ export class HomePage {
         public authModule: AuthServiceProvider,
     ) {
         this.user$ = this.authModule.authUser
+        this.user$.subscribe(user => this.user = user)
         this.threads_col = this.afs.collection('threads')
         this.threads$ = this.threads_col
             .snapshotChanges()
             .map(threads_snap => threads_snap.map(t => t.payload.doc))
             //.subscribe(')
         //this.threads$.subscribe(a => console.log(a))
+
+        //this.afs
+            //.doc('/threads/OvGuofC3fJZMwdXXLqeW/messages/1FngLzJGjGukCrvjLsl9')
+            //.valueChanges()
+            //.subscribe(
+                //a => console.log(a)
+            //)
     }
 
     threadSelected(thread) {
         this.navCtrl.push(ThreadPage, {
-            'thread': thread
+            'thread': thread,
+            'user': this.user
         })
     }
 

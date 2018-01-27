@@ -18,6 +18,8 @@ export class ThreadPage {
     private thread: any
 
     public messages$: Observable<any>;
+    private messagesRef: any;
+    private user: any;
 
     constructor(
         public navCtrl: NavController,
@@ -25,10 +27,21 @@ export class ThreadPage {
         private afs: AngularFirestore,
     ) {
         this.thread = this.navParams.get('thread');
-        this.messages$ = this.afs.collection(this.thread.ref.collection('messages').path).valueChanges()
-        console.log(this.messages$)
-        console.log(this.thread)
-        console.log(this.thread.ref.collection('messages').path)
+        this.user = this.navParams.get('user');
+        this.messagesRef = this.afs.collection(
+            this.thread.ref.collection('messages').path
+        )
+        this.messages$ = this.messagesRef.valueChanges()
+        //console.log(this.messages$)
+        //console.log(this.thread)
+        //console.log(this.thread.ref.collection('messages').path)
+    }
+
+    postMessage(message) {
+        this.messagesRef.add({
+            'text': message,
+            'author': this.afs.doc(`users/${this.user.uid}`).ref,
+        })
     }
 
     getTitle() {
@@ -36,7 +49,8 @@ export class ThreadPage {
     }
 
     ionViewDidLoad() {
-        console.log('ionViewDidLoad ThreadPage');
+        //console.log('ionViewDidLoad ThreadPage');
+        this.postMessage('test')
     }
 
 }
