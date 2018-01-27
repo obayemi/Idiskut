@@ -21,6 +21,8 @@ export class ThreadPage {
     private messagesRef: any;
     private user: any;
 
+    public message: any;
+
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
@@ -67,9 +69,8 @@ export class ThreadPage {
         return this.thread.data().name;
     }
 
-    ionViewDidLoad() {
-        //console.log('ionViewDidLoad ThreadPage');
-        this.postMessage('test')
+    onSubmit() {
+        this.postMessage(this.message)
+        this.message = ""
     }
-
 }
