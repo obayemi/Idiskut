@@ -32,10 +32,9 @@ export class ThreadPage {
         this.user = this.navParams.get('user');
         this.messagesRef = this.afs
             .collection(
-                this.thread.ref.collection(
-                    'messages'
-                    //ref => ref.orderBy('age', 'desc')).path
-            )
+                this.thread.ref.collection('messages').path,
+                ref => ref.orderBy('time', 'desc').limit(50)
+                )
         this.messages$ = this.messagesRef.valueChanges()
         //.switchmap(
             //message => this.afs.doc(message.author.path).valueChanges().map(
@@ -45,16 +44,6 @@ export class ThreadPage {
                 //}
             //)
         //)
-        //console.log(this.messages$)
-        //console.log(this.thread)
-        //console.log(this.thread.ref.collection('messages').path)
-    }
-
-    getUser(userRef) {
-        //userRef.valueChanges()
-        //console.log(userRef)
-        return "a"
-        //return this.afs.doc(userRef.path).valueChanges()
     }
 
     postMessage(message) {
