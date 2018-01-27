@@ -19,4 +19,9 @@
             {{message.text}}
         </ion-item>
     </ion-list>
+    <ion-item>
+        <ion-input type="text" [(ngModel)]="message" name="message" placeholder="message"></ion-input>
+        <button ion-button clear item-right (click)="onSubmit()">Send</button>
+    </ion-item>
+    
 </ion-content>
