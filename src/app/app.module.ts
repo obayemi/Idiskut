@@ -14,12 +14,14 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ThreadPage } from '../pages/thread/thread'
+import { NewConvPage } from '../pages/new-conv/new-conv'
 
 @NgModule({
     declarations: [
         MyApp,
         HomePage,
         ThreadPage,
+        NewConvPage
     ],
     imports: [
         BrowserModule,
@@ -33,6 +35,7 @@ import { ThreadPage } from '../pages/thread/thread'
         MyApp,
         HomePage,
         ThreadPage,
+        NewConvPage
     ],
     providers: [
         StatusBar,

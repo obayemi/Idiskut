@@ -6,6 +6,7 @@ import { User } from '../../models/user';
 import { AngularFirestore } from 'angularfire2/firestore';
 
 import { ThreadPage } from '../thread/thread'
+import { NewConvPage } from '../new-conv/new-conv'
 
 
 @Component({
@@ -47,6 +48,10 @@ export class HomePage {
             'thread': thread,
             'user': this.user
         })
+    }
+
+    newConversation() {
+        this.navCtrl.push(NewConvPage)
     }
 
     ionViewCanEnter() {
