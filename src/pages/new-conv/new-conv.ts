@@ -19,9 +19,9 @@ import 'rxjs/add/operator/switchMap';
 })
 export class NewConvPage {
 
-    public searchField: FormControl;
+    public searchUser: FormControl;
     public user: any;
-    public users: Array<any>;
+    public users: Array<any> = [];
     public search_result$: Observable<Array<any>>;
 
     constructor(
@@ -30,19 +30,31 @@ export class NewConvPage {
         private afs: AngularFirestore,
     ) {
         this.user = this.navParams.get('user');
-        this.searchField = new FormControl();
-        this.searchField.valueChanges.subscribe(a => console.log(a))
-        this.afs.collection('users').valueChanges(a => console.log('', a))
-        this.afs.collection('users', ref => ref.where('displayName', '>=', 'oba')).valueChanges(a => console.log('oba', a))
-        this.afs.collection('users', ref => ref.where('displayName', '>=', 'obayemi Exsequiae')).valueChanges(a => console.log('*', a))
-        this.afs.collection('users', ref => ref.where('displayName', '>=', 'iae')).valueChanges(a => console.log('iae', a))
-        this.search_result$ = this.searchField.valueChanges.switchMap(
-            search => this.afs.collection('users', ref => ref.where('displayName', '>=', search)
-            ).snapshotChanges()).map(threads_snap => threads_snap.map(t => t.payload.doc))
+        this.searchUser = new FormControl();
+        this.initSearch()
+    }
+
+    initSearch() {
+        this.search_result$ = this.searchUser.valueChanges.switchMap(
+            search => {
+                return this.afs .collection(
+                    'users',
+                    ref => {
+                        return ref
+                            .where('displayName', '>=', search)
+                            .orderBy('displayName')
+                    }
+                ).snapshotChanges()
+            })
+            .map(threads_snap => threads_snap.map(
+                t => t.payload.doc
+            ).filter(a => a.data().displayName == this.user.displayName)
+            )
     }
 
     selectContact(contact: any) {
         this.users.push(contact)
+        this.initSearch()
     }
 
     ionViewDidLoad() {
