@@ -4,10 +4,34 @@ import { AuthServiceProvider } from '../../providers/auth-service';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../../models/user';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { PopoverController, ViewController } from 'ionic-angular';
 
 import { ThreadPage } from '../thread/thread'
 import { NewConvPage } from '../new-conv/new-conv'
 
+
+@Component({
+  template: `
+        <ion-list>
+          <button ion-item color="danger" (click)="logout()">Log out</button>
+        </ion-list>
+      `
+})
+export class LogoutPopoverPage {
+    constructor(
+        public authModule: AuthServiceProvider,
+        public viewCtrl: ViewController,
+    ) {}
+
+    logout() {
+        this.authModule.signOut()
+        this.close()
+    }
+
+    close() {
+        this.viewCtrl.dismiss();
+    }
+}
 
 @Component({
     selector: 'page-home',
@@ -25,6 +49,7 @@ export class HomePage {
         public navCtrl: NavController,
         private afs: AngularFirestore,
         public authModule: AuthServiceProvider,
+        private popoverCtrl: PopoverController,
     ) {
         this.user$ = this.authModule.authUser
         this.user$.subscribe(user => this.user = user)
@@ -43,6 +68,16 @@ export class HomePage {
             //)
     }
 
+
+    presentPopover(event) {
+        let popover = this.popoverCtrl.create(LogoutPopoverPage);
+
+        popover.present({
+            'ev': event
+        });
+    }
+
+
     threadSelected(thread) {
         this.navCtrl.push(ThreadPage, {
             'thread': thread,
@@ -51,7 +86,9 @@ export class HomePage {
     }
 
     newConversation() {
-        this.navCtrl.push(NewConvPage)
+        this.navCtrl.push(NewConvPage, {
+            'user': this.user,
+        })
     }
 
     ionViewCanEnter() {

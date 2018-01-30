@@ -14,16 +14,18 @@
 
 
 <ion-content padding>
-	<ion-input type="text" name="titre" placeholder="titre"></ion-input>
-	<!--<ion-list>
-		<ion-item *ngFor="let sc from selected_contacts">
-			{{ sc.name }}
-		</ion-item>
-	</ion-list>-->
-	<ion-input type="text" name="seek" placeholder="Nom"></ion-input>
-	<!--<ion-list>
-		<button ion-item *ngFor="let c from contacts" (click)=selectContact(c)>
-			{{ c.name }}
-		</button>
-	</ion-list>-->
+    <ion-input type="text" name="titre" placeholder="titre"></ion-input>
+    <ion-list>
+        <ion-item *ngFor="let sc of selected_contacts">
+            {{ sc.name }}
+        </ion-item>
+    </ion-list>
+    <ion-input type="search"
+        name="searchUser" placeholder="user name"
+        class="formcontrol" [formControl]="searchField"></ion-input>
+    <ion-list>
+        <button ion-item *ngFor="let c of serarch_result$ | async" (click)=selectContact(c)>
+            {{ c.data().name }}
+        </button>
+    </ion-list>
 </ion-content>

@@ -12,7 +12,7 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { GooglePlus } from '@ionic-native/google-plus';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+import { HomePage, LogoutPopoverPage } from '../pages/home/home';
 import { ThreadPage } from '../pages/thread/thread'
 import { NewConvPage } from '../pages/new-conv/new-conv'
 
@@ -21,7 +21,8 @@ import { NewConvPage } from '../pages/new-conv/new-conv'
         MyApp,
         HomePage,
         ThreadPage,
-        NewConvPage
+        NewConvPage,
+        LogoutPopoverPage,
     ],
     imports: [
         BrowserModule,
@@ -35,7 +36,8 @@ import { NewConvPage } from '../pages/new-conv/new-conv'
         MyApp,
         HomePage,
         ThreadPage,
-        NewConvPage
+        NewConvPage,
+        LogoutPopoverPage,
     ],
     providers: [
         StatusBar,
