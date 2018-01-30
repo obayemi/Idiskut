@@ -13,7 +13,7 @@ import { GooglePlus } from '@ionic-native/google-plus';
 
 import { MyApp } from './app.component';
 import { HomePage, LogoutPopoverPage } from '../pages/home/home';
-import { ThreadPage } from '../pages/thread/thread'
+import { ThreadPage, MorePopoverPage } from '../pages/thread/thread'
 import { NewConvPage } from '../pages/new-conv/new-conv'
 
 @NgModule({
@@ -23,6 +23,7 @@ import { NewConvPage } from '../pages/new-conv/new-conv'
         ThreadPage,
         NewConvPage,
         LogoutPopoverPage,
+        MorePopoverPage
     ],
     imports: [
         BrowserModule,
@@ -38,6 +39,7 @@ import { NewConvPage } from '../pages/new-conv/new-conv'
         ThreadPage,
         NewConvPage,
         LogoutPopoverPage,
+        MorePopoverPage
     ],
     providers: [
         StatusBar,

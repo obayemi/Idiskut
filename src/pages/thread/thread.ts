@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { PopoverController, ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the ThreadPage page.
@@ -9,6 +10,33 @@ import { AngularFirestore } from 'angularfire2/firestore';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
+
+@Component({
+  template: `
+        <ion-list>
+          <button ion-item color="light" (click)="leave()">Quitter</button>
+        </ion-list>
+      `
+})
+export class MorePopoverPage {
+    constructor(
+        public navCtrl: NavController,
+        public viewCtrl: ViewController,
+    ) {}
+
+    leave() {
+        this.navCtrl.pop();
+    }
+
+//<button ion-item color="light" (click)="addPeople()">Ajouter</button>
+    /*addPeople() {
+        this.navCtrl.push()
+    }*/
+
+    close() {
+        this.viewCtrl.dismiss();
+    }
+}
 
 @Component({
     selector: 'page-thread',
@@ -27,6 +55,7 @@ export class ThreadPage {
         public navCtrl: NavController,
         public navParams: NavParams,
         private afs: AngularFirestore,
+        private popoverCtrl: PopoverController
     ) {
         this.thread = this.navParams.get('thread');
         this.user = this.navParams.get('user');
@@ -44,6 +73,14 @@ export class ThreadPage {
                 //}
             //)
         //)
+    }
+
+    presentPopover(event) {
+        let popover = this.popoverCtrl.create(MorePopoverPage);
+
+        popover.present({
+            'ev': event
+        });
     }
 
     postMessage(message) {

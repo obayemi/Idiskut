@@ -20,6 +20,9 @@
             {{ user.data().displayName }}
         </ion-item>
     </ion-list>
+    <button (click)=createConv()>
+      Validate
+    </button>
     <ion-input type="search"
         name="searchUser" placeholder="user name"
         class="formcontrol" [formControl]="searchUser"></ion-input>

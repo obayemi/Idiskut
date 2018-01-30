@@ -57,6 +57,10 @@ export class NewConvPage {
         this.initSearch()
     }
 
+    createConv() {
+
+    }
+    
     ionViewDidLoad() {
         console.log('ionViewDidLoad NewConvPage');
     }
