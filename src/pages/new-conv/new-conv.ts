@@ -20,6 +20,7 @@ import 'rxjs/add/operator/switchMap';
 export class NewConvPage {
 
     public searchUser: FormControl;
+    public threadName: FormControl;
     public user: any;
     public users: Array<any> = [];
     public search_result$: Observable<Array<any>>;
@@ -31,24 +32,27 @@ export class NewConvPage {
     ) {
         this.user = this.navParams.get('user');
         this.searchUser = new FormControl();
+        this.threadName = new FormControl();
         this.initSearch()
     }
 
     initSearch() {
+        this.searchUser.reset()
         this.search_result$ = this.searchUser.valueChanges.switchMap(
             search => {
                 return this.afs .collection(
                     'users',
                     ref => {
                         return ref
-                            .where('displayName', '>=', search)
+                            .where('displayName', '>=', search || '')
                             .orderBy('displayName')
                     }
-                ).snapshotChanges()
+                ).valueChanges()
             })
-            .map(threads_snap => threads_snap.map(
-                t => t.payload.doc
-            ).filter(a => a.data().displayName == this.user.displayName)
+            .map(list => list.filter((a: any) => !(
+                    a.uid == this.user.uid ||
+                    this.users.some(u => a.uid === u.uid)
+                ))
             )
     }
 
@@ -57,12 +61,21 @@ export class NewConvPage {
         this.initSearch()
     }
 
-    createConv() {
+    createThread() {
+        let error = false
+        console.log(this.threadName.value)
+        if (this.threadName.value === "") {
+            this.threadName.setErrors({
+              "notUnique": true
+            });
+            error = true
+        }
+        if (this.users.length == 0) { error = true }
+        if (error) { return }
 
+        this.afs.firestore.collection('threads').add({
+            'name': this.threadName.value,
+            'users': this.users.concat([this.user, ]).map(u => this.afs.firestore.collection('users').doc(u.uid))
+        }).then(() => this.navCtrl.pop())
     }
-    
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad NewConvPage');
-    }
-
 }

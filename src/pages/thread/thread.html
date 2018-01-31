@@ -23,7 +23,7 @@
 
 <ion-content padding>
     <ion-list>
-        <ion-item *ngFor="let message of (messages$ | async)?.reverse()">
+        <ion-item text-wrap *ngFor="let message of (messages$ | async)?.reverse()">
             {{ message.text }}
             <!--<img src="{{(getUser(message.author) | async)?.photoUrl}}">-->
         </ion-item>

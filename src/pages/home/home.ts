@@ -54,18 +54,25 @@ export class HomePage {
         this.user$ = this.authModule.authUser
         this.user$.subscribe(user => this.user = user)
         this.threads_col = this.afs.collection('threads')
-        this.threads$ = this.threads_col
+        this.threads$ = this.user$.switchMap(user =>
+            this.threads_col
             .snapshotChanges()
-            .map(threads_snap => threads_snap.map(t => t.payload.doc))
-            //.subscribe(')
-        //this.threads$.subscribe(a => console.log(a))
-
-        //this.afs
-            //.doc('/threads/OvGuofC3fJZMwdXXLqeW/messages/1FngLzJGjGukCrvjLsl9')
-            //.valueChanges()
-            //.subscribe(
-                //a => console.log(a)
-            //)
+            .map(threads_snap => threads_snap
+                .map(t => t.payload.doc)
+                .filter(t => {
+                    console.log(t.data())
+                    console.log(user)
+                    return user && t.data().users.some(
+                        a => {
+                            console.log(a)
+                            console.log(this.afs.firestore.collection('users').doc(user.uid))
+                            return true
+                            //return a == this.afs.firestore.collection('users').doc(user.uid)
+                        }
+                    )
+                })
+            )
+        )
     }
 
 
