@@ -59,7 +59,7 @@ export class HomePage {
             .snapshotChanges()
             .map(threads_snap => threads_snap
                 .map(t => t.payload.doc)
-                .filter(t => {
+                /*.filter(t => {
                     console.log(t.data())
                     console.log(user)
                     return user && t.data().users.some(
@@ -70,7 +70,7 @@ export class HomePage {
                             //return a == this.afs.firestore.collection('users').doc(user.uid)
                         }
                     )
-                })
+                })*/
             )
         )
     }
